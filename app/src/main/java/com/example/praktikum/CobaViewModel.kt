@@ -1,6 +1,7 @@
 package com.example.activity4
 
 import Data.DataForm
+import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -16,21 +17,30 @@ class CobaViewModel : ViewModel() {
         private set
     var noTlp: String by mutableStateOf( "")
         private set
-    var alamat: String by mutableStateOf( "")
+    var email: String by mutableStateOf( "")
         private set
     var jenisKl: String by mutableStateOf("")
+        private set
+    var status: String by mutableStateOf("")
+        private set
+    var alamat: String by mutableStateOf( "")
         private set
     private val _uistate = MutableStateFlow(DataForm())
     val uiState: StateFlow<DataForm> =_uistate.asStateFlow()
 
-    fun insertData(nm: String, tlp: String, almt: String, jk: String){
+    fun insertData(nm: String, tlp: String, eml: String, jk: String,st: String, almt: String){
         namaUsr = nm;
         noTlp = tlp;
-        alamat = almt;
+        email = eml;
         jenisKl = jk;
+        status = st;
+        alamat = almt;
     }
 
     fun setJenisK(pilihJK: String) {
         _uistate.update { currentState -> currentState.copy(sex = pilihJK) }
+    fun setStatus(pilihST: String) {
+        _uistate.update { currentState -> currentState.copy(status = pilihST) }
+    }
     }
 }

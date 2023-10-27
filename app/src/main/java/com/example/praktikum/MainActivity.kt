@@ -95,6 +95,7 @@ fun SelectJK(
 }
 
 
+
 @Composable
 fun TampilLayout( modifier: Modifier = Modifier
 ){
@@ -121,7 +122,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         mutableStateOf("")
     }
     var textTlp by remember { mutableStateOf("") }
-
+    var textemail by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     val dataForm: DataForm
@@ -150,6 +151,19 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         }
     )
     OutlinedTextField(
+        value = textemail,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        shape = MaterialTheme.shapes.large ,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email")},
+        onValueChange ={
+            textemail= it
+        }
+    )
+    SelectJK(
+        options = jenis.map{id -> context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setJenisK(it)})
+    OutlinedTextField(
         value = textAlmt,
         shape = MaterialTheme.shapes.large ,
         modifier = Modifier.fillMaxWidth(),
@@ -158,12 +172,8 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
             textAlmt = it
         }
     )
-
-    SelectJK(
-        options = jenis.map{id -> context.resources.getString(id)},
-        onSelectionChanged = {cobaViewModel.setJenisK(it)})
     Button(
-        onClick = { cobaViewModel.insertData(textNama, textTlp, textAlmt, dataForm.sex) }
+        onClick = { cobaViewModel.insertData(textNama, textTlp, textemail, dataForm.sex, dataForm.status, textAlmt,) }
     ) {
         Text(
             text = stringResource(R.string.submit),
@@ -174,15 +184,16 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     TextHasil(
         namanya = cobaViewModel.namaUsr,
         telponnya = cobaViewModel.noTlp,
+        emailnnya = cobaViewModel.email,
+        jenisnya = cobaViewModel.jenisKl,
         alamatnya = cobaViewModel.alamat,
-        jenisnnya = cobaViewModel.jenisKl,
     )
 
 }
 
 
 @Composable
-fun TextHasil(namanya : String, telponnya: String, alamatnya: String, jenisnnya: String){
+fun TextHasil(namanya : String, telponnya: String,emailnnya: String, jenisnya: String, alamatnya: String){
     ElevatedCard (
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -201,12 +212,17 @@ fun TextHasil(namanya : String, telponnya: String, alamatnya: String, jenisnnya:
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
         Text(
-            text = "Alamat : " + alamatnya,
+            text = "Email : " + emailnnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
         Text(
-            text = "Jenis Kelamin : " + jenisnnya,
+            text = "Jenis Kelamin : " + jenisnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+        Text(
+            text = "Alamat : " + alamatnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
