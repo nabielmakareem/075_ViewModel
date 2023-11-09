@@ -123,6 +123,8 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     }
     var textTlp by remember { mutableStateOf("") }
     var textemail by remember { mutableStateOf("") }
+    var textumur by remember { mutableStateOf("") }
+    }
 
     val context = LocalContext.current
     val dataForm: DataForm
@@ -158,6 +160,16 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         label = { Text(text = "Email")},
         onValueChange ={
             textemail= it
+        }
+    )
+    OutlinedTextField(
+        value = textumur,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        shape = MaterialTheme.shapes.large ,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email")},
+        onValueChange ={
+            textumur= it
         }
     )
     SelectJK(
